@@ -1,0 +1,67 @@
+ <div class="page-header" id="banner">
+ 	<div class="row">
+ 		<div class="col-lg-8 col-md-7 col-sm-6">
+ 			<h1>Administor Page</h1>
+ 		</div>
+ 	</div>
+ </div>
+
+ <div class="row-offcanvas row-offcanvas-left">
+ 	<div id="sidebar" class="column col-sm-2 col-xs-1 sidebar-offcanvas">
+ 		<div class="col-md-12">
+ 			<h3>Menu</h3>
+ 			<ul class="nav nav-pills nav-stacked">
+ 				<li><a href="#/dashboard">Dashboard</a></li>
+ 				<li class="active"><a href="#">Table</a></li>
+ 				<li><a href="#/admin/newarchive">Archive</a></li>
+ 			</ul>
+ 		</div>
+ 	</div>
+ 	<div class="column col-sm-10 col-xs-11" id="main">
+ 		<div class="col-md-12">
+ 			<form class="form-horizontal" role="form">
+ 				<div class="form-group">
+ 					<label class="control-label col-sm-2">Table Name:</label>
+ 					<div class="col-sm-4">
+ 						<input type="text" class="form-control" id="tableName" placeholder="Enter table name" ng-model="boardName">
+ 					</div>
+ 				</div>
+ 				<div class="form-group">
+ 					<label class="control-label col-sm-2">Description:</label>
+ 					<div class="col-sm-10">          
+ 						<input type="text" class="form-control" id="desc" placeholder="Enter table description" ng-model="description">
+ 					</div>
+ 				</div>
+ 				<div class="form-group">        
+ 					<div class="col-sm-offset-2 col-sm-10">
+ 						<button ng-click="createTable (boardName, description)" class="btn btn-default">Create New Table</button>
+ 					</div>
+ 					<div style="margin-top : 10px; color : red" class="col-sm-offset-2 col-sm-10"><p>{{message}}</p></div>
+ 				</div>
+ 			</form>
+
+ 			<div class="col-sm-10">
+
+ 			<table class="table">
+ 				<thead>
+ 					<tr>
+ 						<th class="col-md-2">Table Name</th>
+ 						<th class="col-md-5">Description</th>
+ 						<th class="col-md-2">Action</th>
+ 					</tr>
+ 				</thead>
+ 				<tbody>
+ 					<tr ng-repeat="board in boards">
+ 						<td>{{board.name}}</td>
+ 						<td>{{board.description}}</td>
+ 						<td ng-click="deleteTable (board.name, $index)"><a>Delete</a></td>
+ 					</tr>
+ 				</tbody>
+ 			</table>
+ 			</div>
+ 		</div>
+
+ 	</div>
+ </div>
+
+

@@ -1,7 +1,9 @@
 <?php
 
+	$HG =& getInstance ();
 	$articleHandler = new Handler ();
 	$articleHandler -> rules (array ('/^insert$/'))
+					-> preHook ($HG -> adminSecureHandler)
 					-> handler (function () {
 						
 						$HG = getInstance ();
@@ -14,7 +16,6 @@
 						exit ('500');
 					});
 
-	$HG =& getInstance ();
 	$HG -> post ($articleHandler -> build ());
 
 ?>

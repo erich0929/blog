@@ -1,7 +1,8 @@
 <?php
-
+	$HG = getInstance ();
 	$editHandler = new Handler ();
 	$editHandler 	-> rules (array ('/^edit$/', '/^.+$/', '/^[0-9]+$/'))
+					-> preHook ($HG -> adminSecureHandler)
 					-> handler (function () {
 						$HG = getInstance ();
 						$pathContext = $HG -> getPathContext ();
@@ -14,7 +15,7 @@
 						echo json_encode (array ("result" => $bool), JSON_FORCE_OBJECT);
 			});
 
-	$HG = getInstance ();
+
 	$HG -> post ($editHandler -> build ());
 
 ?>

@@ -1,7 +1,9 @@
 <?php
 	
+	$HG =& getInstance ();
 	$uploadHandler = new Handler ();
 	$uploadHandler -> rules (array ('/^upload$/'))
+					->preHook ($HG -> adminSecureHandler)
 					-> handler (function () {
 						$HG =& getInstance ();
 						
@@ -16,7 +18,6 @@
 						}
 
 					});
-	$HG =& getInstance ();
 	$HG -> post ($uploadHandler -> build ());
 
 

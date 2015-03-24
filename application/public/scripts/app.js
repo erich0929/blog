@@ -63,7 +63,7 @@
 					resolve : {
 						boards : function (BoardService) {
 							var boardService = new BoardService ();
-							return boardService.getBoardsByPromise ();
+							return boardService.getBoardsByPromise (function (data) {return;});
 						}
 					},
 					security : 'admin'

@@ -45,11 +45,13 @@ angular.module ('erich0929.blogApp.service'/* ['ngResource', 'erich0929.blogApp.
 			});
 		},
 
-		getBoardsByPromise : function () {
+		getBoardsByPromise : function (callback) {
+			var success = callback || 
+				function (data) {
+					data.unshift ({name : 'All', description : '*'});
+				};
 			var boardResource = $resource (url);
-			return boardResource.query (function (data) {
-				data.unshift ({name : 'All', description : '*'});
-			}).$promise;
+			return boardResource.query (success).$promise;
 		},
 
 		getArticle : function (boardName, articleId, callback) {
@@ -78,12 +80,31 @@ angular.module ('erich0929.blogApp.service'/* ['ngResource', 'erich0929.blogApp.
 			var boardResource = $resource (url);
 			return boardResource.get (success);
 		}, 
-		createBoard : function (boardName, description,callback) {
+		createBoard : function (boardName, description, callback) {
 			var success = callback || function (data) {};
 			var url = domain + "/index.php/newtable";
 			var data = "boardName=" + boardName + "&description=" + description;
-			var newtableResource = $resource (url);
-			return newtableResource.save (success);
+			var newtableResource = $resource (url, {}, 
+				{ 
+					save : {
+						method : 'POST', 
+						headers : { 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}
+					}
+				});
+			return newtableResource.save (data).$promise.then (success);
+		},
+		deleteBoard : function (boardName, callback) {
+			var success = callback || function (data) {};
+			var url = domain + "/index.php/droptable";
+			var data = "boardName=" + boardName;
+			var droptableResource = $resource (url, {}, 
+				{ 
+					delete : {
+						method : 'POST', 
+						headers : { 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'}
+					}
+				});
+			return droptableResource.delete (data).$promise.then (success);
 		}
 	};
 

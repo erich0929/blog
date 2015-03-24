@@ -1,5 +1,6 @@
 <?php
 	
+	$HG =& getInstance ();
 	$facebookConfig = array ();
 	$facebookConfig ['appId'] = '807361542684806';
 	$facebookConfig ['appSecret'] = 'ceeb8cafd04c9da9c2bff0176ab3f58a';
@@ -22,11 +23,11 @@
 		echo json_encode ($result);
 		
 	});
-	$HG =& getInstance ();
 	$HG -> get ($readCommentHandler -> build ());
 
 	$postCommentHandler = new Handler ();
 	$postCommentHandler -> rules (array ('/^comment$/'))
+	-> prehook ($HG -> loginedSecureHandler)
 	-> handler (function () use (&$facebookConfig) {
 		$HG = getInstance (); 		
 		$HG -> setContentType ('application/json');

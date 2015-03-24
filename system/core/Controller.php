@@ -98,7 +98,7 @@ class HGController {
 		}
 		// try static resource;
 		if ($this -> staticResource -> route ()) { return; }
-			
+		header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
 		exit ("404 Page Not Found.");
 	
 	}

@@ -10,6 +10,28 @@
 
 	$HG -> domain = 'http://localhost';
 
+	$HG -> adminSecureHandler = function () {
+		$HG =& getInstance ();
+		$authMapper = $HG -> loader -> mapper ('AuthMapper');
+		$userinfo = $authMapper -> auth ();
+		if ($userinfo ['userName'] != 'admin') {
+			header ('Location: ' . $HG -> domain . '/application/public/index.html#/login');
+			return false;
+		}
+		return true;
+	};
+
+	$HG -> loginedSecureHandler = function () {
+		$HG =& getInstance ();
+		$authMapper = $HG -> loader -> mapper ('AuthMapper');
+		$userinfo = $authMapper -> auth ();
+		if ($userinfo ['userName'] == 'guest') {
+			header ('Location: ' . $HG -> domain . '/application/public/index.html#/login');
+			return false;
+		}
+		return true;
+	};
+
 	$dbConfig = new DBConfig ();
 	$dbConfig 	-> username ('admin')
 				-> password ('2642805')
@@ -32,6 +54,7 @@
 				-> controller ('fbLoginController')
 				-> controller ('commentsController')
 				-> controller ('authController')
-				-> controller ('newtableController');
+				-> controller ('editTableController');
+				
 ?>
 

@@ -76,6 +76,11 @@
 			return $this -> driver -> query ($sql);
 		}
 
+		public function dropBoard ($boardName) {
+			$sql = "DELETE FROM `Board` WHERE `name` = '{$boardName}'";
+			return $this -> driver -> query ($sql);
+		}
+
 		private function getResultByArray ($sql) {
 			//
 			$resultId = $this -> driver -> query ($sql);

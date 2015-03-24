@@ -7,6 +7,7 @@
 	$deletehandler = new Handler ();
 
 	$deletehandler -> rules (array ('/^delete$/', '/^.+$/', '/^[0-9]+$/'))
+			-> preHook ($HG -> adminSecureHandler)
 			//-> id ('index')
 			-> handler (function () {
 					$HG = getInstance (); 
