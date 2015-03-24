@@ -1,0 +1,63 @@
+ <div class="page-header" id="banner">
+  <div class="row">
+    <div class="col-lg-8 col-md-7 col-sm-6">
+      <h1>Administor Page</h1>
+    </div>
+  </div>
+ </div>
+
+<div class="row-offcanvas row-offcanvas-left">
+  <div id="sidebar" class="column col-sm-2 col-xs-1 sidebar-offcanvas">
+      <div class="col-md-12">
+        <h3>Menu</h3>
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active"><a href="#/dashboard">Dashboard</a></li>
+          <li><a href="#">New Table</a></li>
+          <li><a href="#">Setting</a></li>
+        </ul>
+      </div>
+  </div>
+  <div class="column col-sm-10 col-xs-11" id="main">
+      <div class="col-md-12">
+        <label>Select a board : </label>
+        <select ng-change="getArticles (board)" ng-model="board" ng-options="board.name for board in boards">
+        </select>
+        <h3>Dashboard</h3>
+        <select ng-show="pages.totalPages" ng-change="updatePageObject (pageObj.no)" ng-model="pageObj" ng-options="pageObj.seq for pageObj in allPages"></select>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="col-md-2">Board</th>
+              <th class="col-md-5">Title</th>
+              <th class="col-md-3">Date</th>
+              <th class="col-md-2">Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="article in pageArticles">
+              <td class="col-md-2">{{article.boardName}}</td>
+              <td class="col-md-5">{{article.title}}</td>
+              <td class="col-md-3">{{article.date * 1000 | date:"MMMM d, yyyy 'at' HH:mm"}}</td>
+              <td class="col-md-2"><a href="#/edit/{{article.boardName}}/{{article.articleId}}"><span>Edit</span></a>/<a ng-click="deleteArticle (board.name, article.articleId, $index)"><span>Delete</span></a></td>
+            </tr>
+            <tr id="pages">
+              <td colspan="4">
+                <div>
+                  <span ng-hide="pages.start == 1">
+                    <a ng-click="updateStartPage (true)">pre</a>
+                  </span>
+                  <span ng-repeat="page in ranges">
+                    <a ng-click="updateCurrentPageArticles (page)" ng-model="page">{{page}}</a>
+                  </span>
+                  <span ng-hide="(pages.start + pages.range || 0) > pages.totalPages">
+                    <a ng-click="updateStartPage (false)">next</a>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+  </div>
+</div>

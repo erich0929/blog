@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="sampleApp">
+<head>
+	<script type="text/javascript" src="libs/angular/angular.js"></script>
+	<script type="text/javascript">
+		angular.module ('sampleApp', [])
+				.controller ('mainController', function ($scope, $timeout) {
+					var threeSecPromise = $timeout (function () {
+						return $scope.answer;
+					}, 3000);
+
+					threeSecPromise.then (function (val) {
+						if (val == 530) {
+							$scope.result = 'Correct!!';
+						} else {
+							$scope.result = 'Wrong ..';
+						}
+					}, function () {
+						$scope.result = 'Is it so difficult?';
+					});
+
+					threeSecPromise.finally (function () {
+						$scope.info = 'Do refresh, if you wanna retry.';
+					});
+
+					$scope.giveUp = function () {
+						$timeout.cancel (threeSecPromise);
+					}
+				});
+	</script>
+	<title></title>
+</head>
+<body ng-controller='mainController'>
+	<h1>Do answer in 3 seconds.</h1>
+	10 - 60 * 8 + 1000 = <input type='text' ng-model='answer' ng-disabled='result'>
+	<button ng-click='giveUp ()'>Give Up ..</button>
+	<p>{{result}}</p>
+	<p>{{info}}</p>
+</body>
+</html>

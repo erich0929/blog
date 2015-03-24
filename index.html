@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app='erich0929.blogApp' ng-controller='appController'>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+	<meta charset="utf-8">
+	<meta property="fb:app_id" content="807361542684806"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:url" content="{{metadata.url}}" />
+	<meta property="og:title" content="{{metadata.title}}" />
+	<meta property="og:description" content="{{metadata.description}}" />
+	<link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="libs/jquery-ui/themes/base/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="scripts/blog/css/view.css">
+
+	<title>Welcome to My PHP Blog</title>
+</head>
+<body ng-controller='appController'>
+
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="#/" class="navbar-brand">{{brand}}</a>
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="navbar-collapse collapse" id="navbar-main">
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" id="themes">Catagory <span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<!-- data -->
+							<li ng-repeat="board in boards"><a href="#/main?board={{board.name}}">{{board.name}}</a></li>
+							<li class="divider"></li>
+
+						</ul>
+					</li>
+					<li ng-show="userName == 'admin'" class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="" id="admin">Admin <span class="caret"></span></a>
+						<ul class="dropdown-menu" aria-labelledby="download">
+							<li><a href="#/admin">Administor</a></li>
+							<li><a href="#/write">Write Article</a></li>
+							<li><a href=""></a></li>
+							<li class="divider"></li>
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li ng-show="userName != 'admin'">
+						<a href="#/login" id="admin">Login </a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>	
+	<div class='container'>
+		<ng-view></ng-view>
+	</div>
+	<script type="text/javascript" src="libs/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="libs/jquery-ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="libs/angular/angular.js"></script>
+	<script type="text/javascript" src="libs/angular-resource/angular-resource.js"></script>
+	<script type="text/javascript" src="libs/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="libs/angular-cookies/angular-cookies.min.js"></script>
+	<script type="text/javascript" src="libs/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="scripts/app.js"></script>
+	<script type="text/javascript" src="scripts/blog/services/boardService.js"></script>
+	<script type="text/javascript" src="scripts/blog/services/authService.js"></script>
+	<script type="text/javascript" src="scripts/blog/services/articleService.js"></script>
+	<script type="text/javascript" src="scripts/blog/services/commentService.js"></script>
+	<script type="text/javascript" src="scripts/blog/controllers/mainController.js"></script>
+	<script type="text/javascript" src="scripts/blog/controllers/writeController.js"></script>
+	<script type="text/javascript" src="scripts/blog/controllers/adminController.js"></script>
+	<script type="text/javascript" src="scripts/blog/controllers/viewController.js"></script>
+	<script type="text/javascript" src="scripts/blog/controllers/dashboardController.js"></script>
+	<script type="text/javascript" src="scripts/blog/controllers/editController.js"></script>
+	<script type="text/javascript" src="scripts/blog/controllers/loginController.js"></script>
+	<script type="text/javascript" src="scripts/blog/directives/pages.js"></script>
+	
+</body>
+</html>

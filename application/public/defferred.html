@@ -1,0 +1,74 @@
+<!doctype html>
+<html ng-app='sampleApp'>
+<head>
+	<script type="text/javascript" src="libs/angular/angular.js"></script>
+	<script type="text/javascript">
+		angular.module ('sampleApp', [])
+				.factory ('Teacher', [function () {
+					// Teacher contructor
+					function Teacher (name) {
+						this.name = name;
+					}
+
+					Teacher.prototype.makeScore = function (data) {
+						if (data > 5) {
+							return 100;
+						} else {
+							return 4;
+						}
+					}
+
+					Teacher.prototype.giveCandy = function (num, student) {
+						return student.name + ", I'll give you " + num + " candies.";
+					}
+
+					Teacher.prototype.panalty = function (num, student, error) {
+						return student.name + ", I'll give you " + num + " panalties.";
+					}
+
+					return Teacher;
+
+				}])
+				.factory ('Student', ['$q', '$timeout', function ($q, $timeout) {
+					function Student (name) {
+						this.name = name;
+					}
+
+					Student.prototype.doHomework = function (homework) {
+						var deffered = $q.defer (),
+							time = (Math.random () * 10 + homework.length) * 500;
+						$timeout (function () {
+							var homeworkResult = time / 1000;
+							if (time < 6000) {
+								deffered.resolve (homeworkResult);
+							} else {
+								deffered.reject (" ... Nothing to say ... ");
+							}
+						}, time);
+						return deffered.promise;
+					}
+					return Student;
+				}])
+				.controller ('mainController', function ($scope, $timeout, Teacher, Student) {
+					var jay = new Student ('jay'),
+						cindy = new Student ('cindy').
+						promiseWithStudent = jay.doHomework ('Homework ... ');
+
+						promiseWithStudent.then (function (data) {
+							if (cindy.makeScore (data) == 100) {
+								console.log (cindy.giveCandy (100, jay));
+							} else {
+								console.log (cindy.giveCandy (50, jay));
+							}
+
+						}, function (error) {
+							console.log (cindy.panalty (1000, jay, error));
+						});
+				});
+	</script>
+	<title></title>
+</head>
+<body ng-controller='mainController'>
+
+</body>
+</html>
